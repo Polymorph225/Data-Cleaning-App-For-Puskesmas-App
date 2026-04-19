@@ -459,7 +459,7 @@ with st.sidebar:
     fill_pekerjaan  = st.text_input("Pekerjaan kosong", value="Tidak Diketahui")
     fill_rm_lama    = st.text_input("RM Lama kosong", value="-")
     fill_desa       = st.text_input("Desa kosong", value="-")
-    fill_penjamin = st.text_input("No Penjamin kosong", value="-")
+    fill_no_penjamin = st.text_input("No Penjamin kosong", value="-")
 
     st.markdown("---")
     st.markdown("**📤 Format Output**")
@@ -672,6 +672,8 @@ if run_clean or "df_clean" in st.session_state:
             fill_nulls_map["RM Lama"] = fill_rm_lama
         if fill_desa and "Desa" in df_raw.columns:
             fill_nulls_map["Desa"] = fill_desa
+        if fill_no_penjamin and "No Penjamin" in df_raw.columns:
+            fill_nulls_map["No Penjamin"] = fill_no_penjamin
 
         rename_map = {}
         if "kategori" in df_raw.columns:
