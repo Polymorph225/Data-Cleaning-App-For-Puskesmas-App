@@ -552,8 +552,11 @@ def merge_excel_files(
         info = item["info"]
         try:
             f.seek(0)
-            if f.name.lower().endswith(".csv"):
+            fname = f.name.lower()
+            if fname.endswith(".csv"):
                 df = pd.read_csv(f)
+            elif fname.endswith(".xls"):
+                df = pd.read_excel(f, engine="xlrd")
             else:
                 df = pd.read_excel(f, engine="openpyxl")
 
@@ -785,6 +788,9 @@ with tab_clean:
             name = file.name.lower()
             if name.endswith(".csv"):
                 return pd.read_csv(file), ["Sheet1"]
+            elif name.endswith(".xls"):
+                xf = pd.ExcelFile(file, engine="xlrd")
+                return pd.read_excel(file, sheet_name=xf.sheet_names[0], engine="xlrd"), xf.sheet_names
             else:
                 xf = pd.ExcelFile(file, engine="openpyxl")
                 return pd.read_excel(file, sheet_name=xf.sheet_names[0], engine="openpyxl"), xf.sheet_names
